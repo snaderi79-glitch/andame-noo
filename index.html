@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#d946a8"><meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="manifest" href="manifest.json"><link rel="icon" href="icon.svg">
+<title>اندام نو</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+<style>
+/* فونت بی‌زر: فایل را در پوشه fonts با نام BZar.woff2 / .woff / .ttf بگذارید */
+@font-face{font-family:BZar;src:local('B Zar'),local('BZar'),url(fonts/BZar.woff2) format('woff2'),url(fonts/BZar.woff) format('woff'),url(fonts/BZar.ttf) format('truetype')}
+:root{--p:#d946a8;--p2:#a855f7;--rose:#fb7185;--gold:#f5b942;--mint:#34d399;--sky:#60a5fa;--bg:#fff0f6;--ink:#4a2040}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;font-family:BZar,Vazirmatn,Tahoma,sans-serif;color:var(--ink);padding-bottom:calc(86px + env(safe-area-inset-bottom));min-height:100vh;
+background:radial-gradient(circle at 10% 0,#ffd6ea 0,transparent 40%),radial-gradient(circle at 100% 30%,#e9d5ff 0,transparent 40%),radial-gradient(circle at 0 100%,#ffe4d6 0,transparent 40%),var(--bg);font-size:15px}
+#wm{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:.09;pointer-events:none;z-index:0;color:var(--p)}
+#wm svg{width:min(75vw,420px)}#wm b{font-size:34px;margin-top:6px}
+header,main,nav{position:relative;z-index:1}
+header{background:linear-gradient(135deg,#f472b6,#d946a8 45%,#a855f7);color:#fff;padding:calc(14px + env(safe-area-inset-top)) 16px 18px;border-radius:0 0 30px 30px;display:flex;align-items:center;gap:12px;box-shadow:0 8px 24px #d946a844}
+header h1{margin:0;font-size:21px}header small{opacity:.92}
+.av{width:46px;height:46px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:27px;overflow:hidden;border:3px solid #ffffffaa;flex:none}
+.av img{width:100%;height:100%;object-fit:cover}
+main{padding:14px;max-width:780px;margin:auto}
+.card{background:#ffffffd9;backdrop-filter:blur(6px);border-radius:22px;padding:14px;margin-bottom:13px;box-shadow:0 4px 16px #d946a822;border:1px solid #fce7f3}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{border-radius:18px;padding:12px;color:#fff;text-align:center;font-size:13px}.stat b{display:block;font-size:22px;margin-top:4px}
+.c1{background:linear-gradient(135deg,#34d399,#10b981)}.c2{background:linear-gradient(135deg,#60a5fa,#818cf8)}
+.c3{background:linear-gradient(135deg,#fbbf24,#fb7185)}.c4{background:linear-gradient(135deg,#f472b6,#a855f7)}
+.c5{background:linear-gradient(135deg,#22d3ee,#60a5fa)}.c6{background:linear-gradient(135deg,#a3e635,#34d399)}
+input,select,button,textarea{font:inherit;padding:11px;border-radius:14px;border:2px solid #fbcfe8;width:100%;margin:4px 0;background:#fff;color:var(--ink)}
+input:focus,select:focus{outline:none;border-color:var(--p)}
+button{background:linear-gradient(135deg,#ec4899,#a855f7);color:#fff;border:0;cursor:pointer;font-weight:bold;box-shadow:0 4px 10px #d946a833}
+button.s{background:linear-gradient(135deg,#34d399,#10b981)}button.d{background:#fb7185;width:auto;padding:4px 10px;margin:0}
+button.g{background:#fce7f3;color:var(--p);box-shadow:none}button.sm{width:auto;padding:5px 12px;margin:0}
+nav{position:fixed;bottom:0;left:0;right:0;display:flex;background:#fff;box-shadow:0 -4px 18px #d946a833;border-radius:22px 22px 0 0;overflow-x:auto;padding-bottom:env(safe-area-inset-bottom);z-index:5}
+nav a{flex:1;min-width:64px;text-align:center;padding:8px 4px;font-size:11px;color:#9d6b8c;cursor:pointer}
+nav a span{display:block;font-size:20px}nav a.on{color:#fff;background:var(--c);border-radius:16px;margin:4px}
+.bar{height:16px;background:#fce7f3;border-radius:9px;overflow:hidden}.bar i{display:block;height:100%;background:linear-gradient(90deg,#f472b6,#a855f7)}
+.row{display:flex;gap:6px;align-items:center}.row>*{flex:1}.row .fix{flex:none}
+.tag{display:inline-block;padding:2px 10px;border-radius:12px;color:#fff;font-size:12px}
+.seg{display:flex;gap:6px}.seg button{background:#fce7f3;color:var(--p);box-shadow:none}.seg button.on{background:linear-gradient(135deg,#ec4899,#a855f7);color:#fff}
+.msg{border-right:6px solid var(--c,#d946a8);padding:8px 12px;background:#fff5fa;border-radius:12px;margin:6px 0}
+h3{margin:0 0 8px}li{margin:6px 0;list-style:none}ul{padding:0}.up{color:#e11d48}.dn{color:#059669}
+table{width:100%;border-collapse:collapse;font-size:14px}td,th{padding:6px;border-bottom:1px solid #fce7f3;text-align:center}
+.foods{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px;max-height:55vh;overflow:auto}
+.fd{background:#fff5fa;border-radius:16px;padding:8px;text-align:center;cursor:pointer;font-size:11px;border:2px solid transparent}
+.fd:active{border-color:var(--p)}.fd .e{font-size:38px;line-height:1.2;display:block}.fd small{color:var(--p)}
+.modal{position:fixed;inset:0;background:#4a204099;z-index:20;display:flex;align-items:flex-end;justify-content:center}
+.modal>div{background:#fff;width:100%;max-width:640px;border-radius:26px 26px 0 0;padding:16px;max-height:88vh;overflow:auto}
+.ph{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.ph img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:14px}
+.avs{display:flex;flex-wrap:wrap;gap:8px}.avs span{font-size:30px;background:#fce7f3;border-radius:50%;width:50px;height:50px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.rm{direction:ltr}.rm .r{display:flex;gap:2px;margin:2px 0}.rm .r.rev{flex-direction:row-reverse}
+.rm .cell{flex:1;text-align:center;color:#fff;border-radius:6px;padding:3px 0;font-weight:bold;font-size:12px;min-width:0}
+.rm .cell small{display:block;font-size:7.5px;font-weight:normal;opacity:.95}
+.rm .cell.off{opacity:.28}.rm .cell.now{outline:3px solid #4a2040;transform:scale(1.15);z-index:2;position:relative}
+.lv{direction:rtl;font-size:11px;margin:8px 0 0;font-weight:bold}
+.auth{max-width:420px;margin:30px auto}.pill{display:inline-block;background:#fce7f3;color:var(--p);padding:2px 10px;border-radius:10px;font-size:12px}
+@media(min-width:700px){body{font-size:16px}}
+</style></head><body>
+<div id="wm"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-width="2.5"/><circle cx="50" cy="26" r="7"/><path d="M50 35C37 38 41 52 45 58C39 70 39 78 37 86L63 86C61 78 61 70 55 58C59 52 63 38 50 35Z"/><path d="M68 40c10-2 14 6 8 12-6-2-9-6-8-12Z" opacity=".7"/></svg><b>اندام نو</b></div>
+<header><div class="av" id="hav">🌸</div><div><h1>اندام نو</h1><small id="today"></small></div></header>
+<main id="app"></main><nav id="nav"></nav><div id="mod"></div>
+<script>
+const $=s=>document.querySelector(s);
+const FA=n=>String(n).replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d]);
+const R1=n=>FA((Math.round(n*10)/10).toString().replace('.','٫'));
+const R2=n=>FA((Math.round(n*100)/100).toFixed(2).replace('.','٫'));
+const MONTHS=['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'];
+/* ===== تاریخ شمسی ===== */
+function g2j(gy,gm,gd){const t=[0,31,59,90,120,151,181,212,243,273,304,334];const g2=gm>2?gy+1:gy;
+let d=355666+365*gy+Math.floor((g2+3)/4)-Math.floor((g2+99)/100)+Math.floor((g2+399)/400)+gd+t[gm-1];
+let jy=-1595+33*Math.floor(d/12053);d%=12053;jy+=4*Math.floor(d/1461);d%=1461;
+if(d>365){jy+=Math.floor((d-1)/365);d=(d-1)%365}
+const jm=d<186?1+Math.floor(d/31):7+Math.floor((d-186)/30);const jd=1+(d<186?d%31:(d-186)%30);return[jy,jm,jd]}
+function j2g(jy,jm,jd){jy+=1595;let d=-355668+365*jy+Math.floor(jy/33)*8+Math.floor(((jy%33)+3)/4)+jd+(jm<7?(jm-1)*31:(jm-7)*30+186);
+let gy=400*Math.floor(d/146097);d%=146097;if(d>36524){gy+=100*Math.floor(--d/36524);d%=36524;if(d>=365)d++}
+gy+=4*Math.floor(d/1461);d%=1461;if(d>365){gy+=Math.floor((d-1)/365);d=(d-1)%365}
+let gd=d+1;const s=[0,31,(gy%4==0&&gy%100!=0)||gy%400==0?29:28,31,30,31,30,31,31,30,31,30,31];let gm;
+for(gm=1;gm<13&&gd>s[gm];gm++)gd-=s[gm];return[gy,gm,gd]}
+const iso=(y,m,d)=>`${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+const todayISO=()=>{const t=new Date();return iso(t.getFullYear(),t.getMonth()+1,t.getDate())};
+const dn=s=>{const[a,b,c]=s.split('-').map(Number);return Math.round(Date.UTC(a,b-1,c)/864e5)};
+const fromDn=n=>{const t=new Date(n*864e5);return iso(t.getUTCFullYear(),t.getUTCMonth()+1,t.getUTCDate())};
+const J=s=>{const[a,b,c]=s.split('-').map(Number);return g2j(a,b,c)};
+const jf=s=>{const[y,m,d]=J(s);return `${FA(d)} ${MONTHS[m-1]} ${FA(y)}`};
+const jshort=s=>{const[y,m,d]=J(s);return `${FA(m)}/${FA(d)}`};
+function datePicker(id,val){const[jy,jm,jd]=J(val);const cy=J(todayISO())[0];
+let h=`<div class="row" id="${id}"><select>`;for(let i=1;i<=31;i++)h+=`<option ${i==jd?'selected':''} value=${i}>${FA(i)}</option>`;
+h+=`</select><select>`;MONTHS.forEach((n,i)=>h+=`<option ${i+1==jm?'selected':''} value=${i+1}>${n}</option>`);
+h+=`</select><select>`;for(let y=cy-5;y<=cy+1;y++)h+=`<option ${y==jy?'selected':''} value=${y}>${FA(y)}</option>`;return h+`</select></div>`}
+const getDate=id=>{const s=document.querySelectorAll(`#${id} select`);const[a,b,c]=j2g(+s[2].value,+s[1].value,+s[0].value);return iso(a,b,c)};
+/* ===== پیکربندی پولی‌سازی (آینده) ===== */
+const BILLING={enabled:false,currency:'تومان',plans:[
+ {id:'free',name:'رایگان',price:0,features:['ثبت وزن و غذا','نمودار','نقشه راه گام']},
+ {id:'pro',name:'ویژه (به‌زودی)',price:0,features:['گزارش PDF','مشاوره و رژیم اختصاصی','پشتیبان‌گیری ابری','نمودار پیشرفته']}]};
+const canUse=(feat)=>!BILLING.enabled||U().plan!=='free'; // در آینده برای قفل کردن امکانات استفاده می‌شود
+/* ===== ذخیره‌سازی و کاربران ===== */
+let DB=JSON.parse(localStorage.getItem('an_db')||'{"users":{}}');
+const saveDB=()=>localStorage.setItem('an_db',JSON.stringify(DB));
+let me=localStorage.getItem('an_me')||null;
+const U=()=>DB.users[me];const S_=()=>U().data;
+async function hash(p,salt){const s=salt+':'+p;try{const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}catch(e){let h=5381;for(const c of s)h=(h*33^c.charCodeAt(0))>>>0;return'f'+h}}
+const emptyData=()=>({profile:null,w:{},meals:{},act:{},avatar:{t:'e',v:'🌸'},photos:[]});
+async function doRegister(){const u=$('#un').value.trim().toLowerCase(),p=$('#pw').value;
+if(!/^[a-z0-9_]{3,20}$/.test(u))return alert('نام کاربری: ۳ تا ۲۰ حرف انگلیسی، عدد یا _');
+if(p.length<6)return alert('رمز عبور حداقل ۶ کاراکتر');if($('#pw2').value!==p)return alert('تکرار رمز یکسان نیست');
+if(DB.users[u])return alert('این نام کاربری قبلاً گرفته شده');
+const salt=Math.random().toString(36).slice(2);const first=!Object.keys(DB.users).length;
+DB.users[u]={salt,hash:await hash(p,salt),role:first?'admin':'user',banned:false,plan:'free',created:todayISO(),data:emptyData()};
+saveDB();me=u;localStorage.setItem('an_me',u);render()}
+async function doLogin(){const u=$('#un').value.trim().toLowerCase(),p=$('#pw').value;const x=DB.users[u];
+if(!x||x.hash!==await hash(p,x.salt))return alert('نام کاربری یا رمز اشتباه است');
+if(x.banned)return alert('⛔ حساب شما مسدود شده است.');
+me=u;localStorage.setItem('an_me',u);tab='home';render()}
+const logout=()=>{me=null;localStorage.removeItem('an_me');render()}
+let authMode='login';
+function authView(){$('#nav').innerHTML='';$('#hav').innerHTML='🌸';$('#today').textContent='خوش آمدید';
+const first=!Object.keys(DB.users).length;
+$('#app').innerHTML=`<div class="card auth"><div class="seg"><button class="${authMode=='login'?'on':''}" onclick="authMode='login';render()">ورود</button><button class="${authMode=='reg'?'on':''}" onclick="authMode='reg';render()">ثبت‌نام</button></div>
+<h3 style="margin-top:12px">${authMode=='login'?'🔐 ورود به اندام نو':'🌷 ساخت حساب'}</h3>
+${first&&authMode=='reg'?'<div class="msg">اولین حساب ساخته‌شده، مدیر برنامه می‌شود.</div>':''}
+<input id="un" placeholder="نام کاربری (انگلیسی)" autocapitalize="none" autocomplete="username" dir="ltr">
+<input id="pw" type="password" placeholder="رمز عبور" autocomplete="current-password" dir="ltr">
+${authMode=='reg'?'<input id="pw2" type="password" placeholder="تکرار رمز" dir="ltr">':''}
+<button onclick="${authMode=='login'?'doLogin()':'doRegister()'}">${authMode=='login'?'ورود':'ثبت‌نام رایگان'}</button></div>`}
+/* ===== مدل داده ===== */
+const P=()=>S_().profile;
+const dates=()=>Object.keys(S_().w).sort();
+const curW=()=>{const d=dates();return d.length?S_().w[d.at(-1)]:P().w0};
+const bmi=w=>w/Math.pow(P().h/100,2);
+const bmiW=(h,b)=>Math.round(b*Math.pow(h/100,2)*10)/10;
+const targetW=()=>P().target||bmiW(P().h,P().bmiT||22.5);
+const bmr=()=>{const p=P();return 10*curW()+6.25*p.h-5*p.age+(p.sex=='m'?5:-161)};
+const AF={1.2:'کم‌تحرک',1.375:'کمی فعال',1.55:'نسبتاً فعال',1.725:'خیلی فعال'};
+const tdee=()=>bmr()*P().af;
+const goalCal=()=>Math.max(P().sex=='m'?1500:1200,Math.round(tdee()-500));
+const mealCal=d=>Object.values(S_().meals[d]||{}).flat().reduce((a,f)=>a+f.k*f.n,0);
+const burn=d=>{const a=S_().act[d];return a?Math.round((a.steps||0)*0.04+(a.min||0)*6):0};
+function trend(){const d=dates();if(d.length<3)return null;const last=d.slice(-14),x=last.map(dn),y=last.map(k=>S_().w[k]);
+const n=x.length,mx=x.reduce((a,b)=>a+b)/n,my=y.reduce((a,b)=>a+b)/n;let nu=0,de=0;x.forEach((v,i)=>{nu+=(v-mx)*(y[i]-my);de+=(v-mx)**2});return{perWeek:(de?nu/de:0)*7}}
+function interpret(){const t=trend();if(!t)return[['#9d6b8c','حداقل ۳ روز وزن ثبت کنید تا روند تحلیل شود.']];
+const pw=t.perWeek,w=curW(),pct=-pw/w*100,out=[];
+if(pw>0.1)out.push(['#e11d48',`وزن شما در حال افزایش است (حدود ${R1(pw)} کیلو در هفته). غذا و تحرک را مرور کنید.`]);
+else if(pw>-0.1)out.push(['#f59e0b','وزن ثابت مانده (فلات). نوسان آب بدن طبیعی است؛ چند روز صبر کنید یا ۲۰ دقیقه پیاده‌روی اضافه کنید.']);
+else if(pct<=1)out.push(['#10b981',`روند عالی و پایدار: حدود ${R1(-pw)} کیلو کاهش در هفته (محدوده ایمن).`]);
+else out.push(['#e11d48',`کاهش خیلی سریع است (${R1(-pw)} کیلو در هفته). خطر افت عضله؛ کالری را کمی بیشتر کنید.`]);
+const rem=curW()-targetW();if(pw<-0.1&&rem>0)out.push(['#60a5fa',`با این روند حدود ${FA(Math.ceil(rem/-pw))} هفته تا رسیدن به هدف باقی است.`]);
+const d=dates();if(d.length>=2){const df=S_().w[d.at(-1)]-S_().w[d.at(-2)];out.push(['#a855f7',`تغییر نسبت به ثبت قبلی: ${df>0?'+':''}${R1(df)} کیلو`])}
+return out}
+/* ===== نمودار ===== */
+function chart(pts,color){if(!pts.length)return'<p style="text-align:center;color:#9d6b8c">هنوز وزنی ثبت نشده است.</p>';
+const W=340,H=210,pd=34;const v=pts.map(p=>p[1]);let mn=Math.min(...v,targetW())-1,mx=Math.max(...v)+1;
+const X=i=>pts.length==1?(W+pd)/2:pd+i*(W-pd-12)/(pts.length-1),Y=y=>12+(mx-y)*(H-46)/(mx-mn);
+const line=pts.map((p,i)=>`${i?'L':'M'}${X(i)},${Y(p[1])}`).join('');
+let s=`<svg viewBox="0 0 ${W} ${H}" style="width:100%;direction:ltr"><defs><linearGradient id="gr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${color}" stop-opacity=".4"/><stop offset="1" stop-color="${color}" stop-opacity="0"/></linearGradient></defs>`;
+for(let i=0;i<5;i++){const y=mn+(mx-mn)*i/4;s+=`<line x1="${pd}" x2="${W-8}" y1="${Y(y)}" y2="${Y(y)}" stroke="#fbcfe8"/><text x="${pd-4}" y="${Y(y)+3}" font-size="9" fill="#9d6b8c" text-anchor="end">${R1(y)}</text>`}
+const ty=Y(targetW());s+=`<line x1="${pd}" x2="${W-8}" y1="${ty}" y2="${ty}" stroke="#10b981" stroke-width="2" stroke-dasharray="6 4"/><text x="${W-10}" y="${ty-4}" font-size="10" fill="#10b981" text-anchor="end">هدف ${R1(targetW())}</text>`;
+if(pts.length>1)s+=`<path d="${line}L${X(pts.length-1)},${Y(mn)}L${X(0)},${Y(mn)}Z" fill="url(#gr)"/>`;
+s+=`<path d="${line}" fill="none" stroke="${color}" stroke-width="3" stroke-linejoin="round"/>`;
+pts.forEach((p,i)=>{s+=`<circle cx="${X(i)}" cy="${Y(p[1])}" r="5" fill="#fff" stroke="${color}" stroke-width="3"/>`;
+if(pts.length<=10||i%Math.ceil(pts.length/8)==0||i==pts.length-1)s+=`<text x="${X(i)}" y="${H-16}" font-size="9" fill="#6b3a5c" text-anchor="middle">${p[0]}</text>`;
+if(pts.length<=8)s+=`<text x="${X(i)}" y="${Y(p[1])-10}" font-size="10" font-weight="bold" fill="${color}" text-anchor="middle">${R1(p[1])}</text>`});
+return s+'</svg>'}
+function bars(items,color){const mx=Math.max(...items.map(i=>i[1]),1);return items.map(i=>`<div class="row" style="margin:4px 0"><span class="fix" style="width:56px;font-size:12px">${i[0]}</span><div class="bar"><i style="width:${i[1]/mx*100}%;background:${i[2]||color}"></i></div><span class="fix" style="width:50px;font-size:12px">${FA(Math.round(i[1]))}</span></div>`).join('')}
+/* ===== غذاها (ایموجی به‌عنوان تصویر؛ در آینده عکس واقعی) ===== */
+const FOODS=[["نان لواش",90,"🫓","۱ تکه"],["نان سنگک",150,"🥖","۱ کف دست"],["نان بربری",160,"🥖","۱ کف دست"],["نان تست",80,"🍞","۱ برش"],["برنج پخته",200,"🍚","۱ مشت بزرگ"],["ماکارونی",220,"🍝","۱ پیمانه"],["سیب‌زمینی",130,"🥔","۱ متوسط"],["تخم‌مرغ آب‌پز",75,"🥚","۱ عدد"],["نیمرو",110,"🍳","۱ عدد"],["پنیر",80,"🧀","۱ قوطی کبریت"],["کره",36,"🧈","۱ قاشق چای‌خوری"],["مربا/عسل",50,"🍯","۱ قاشق"],["شیر",120,"🥛","۱ لیوان"],["ماست کم‌چرب",100,"🥣","۱ کاسه"],["دوغ",40,"🥛","۱ لیوان"],["چای با قند",25,"🍵","۱ لیوان"],["قهوه ساده",5,"☕","۱ فنجان"],["مرغ پخته",165,"🍗","۱۰۰ گرم"],["جوجه‌کباب",250,"🍢","۱ سیخ"],["کوبیده",300,"🍖","۱ سیخ"],["گوشت قرمز پخته",250,"🥩","۱۰۰ گرم"],["ماهی",150,"🐟","۱۰۰ گرم"],["قورمه‌سبزی",190,"🥘","۱ ملاقه"],["قیمه",220,"🍲","۱ ملاقه"],["عدسی/سوپ",170,"🍜","۱ کاسه"],["آبگوشت",450,"🍲","۱ پرس"],["املت",300,"🍳","۱ پرس"],["حلیم",300,"🥣","۱ کاسه"],["چلو با خورش",600,"🍛","۱ پرس"],["پیتزا",285,"🍕","۱ برش"],["ساندویچ",450,"🥪","۱ عدد"],["سالاد",60,"🥗","۱ بشقاب"],["سیب",80,"🍎","۱ متوسط"],["موز",105,"🍌","۱ عدد"],["پرتقال",65,"🍊","۱ عدد"],["خیار",15,"🥒","۱ عدد"],["هندوانه",90,"🍉","۱ برش"],["گردو/بادام",170,"🥜","۱ مشت"],["پسته",160,"🌰","۱ مشت"],["شکلات",55,"🍫","۱ تکه"],["بیسکویت",50,"🍪","۱ عدد"],["نوشابه",140,"🥤","۱ قوطی"],["چیپس",150,"🍟","۱ بسته کوچک"],["خرما",23,"🌴","۱ عدد"],["کیک",300,"🍰","۱ برش"],["انگور",70,"🍇","۱ خوشه کوچک"],["توت‌فرنگی",50,"🍓","۱ کاسه"]];
+const MEALS=[["🌅","صبحانه"],["🍎","میان‌وعده صبح"],["🍛","ناهار"],["🥜","میان‌وعده عصر"],["🍲","شام"]];
+/* ===== نقشه راه گام ===== */
+const LV=['#111111','#ff2a2a','#e8201a','#ffb400','#ffe500','#38d200','#00a859','#00b0f0','#0b6fd1','#0a2a78'];
+const ST=['اول','دوم','سوم','چهارم','پنجم','ششم','هفتم','هشتم','نهم'];
+const stepW=n=>P().w0-n*(P().w0-targetW())/100;
+const curStep=()=>{const d=(P().w0-targetW())/100;if(d<=0)return 0;return Math.max(0,Math.min(100,Math.floor((P().w0-curW())/d+1e-9)))};
+function roadmap(){const p=P(),t=targetW();if(p.w0<=t)return'<div class="card">وزن هدف از وزن شروع کمتر نیست؛ برای نقشه راه، هدف پایین‌تر انتخاب کنید.</div>';
+const cs=curStep(),d=(p.w0-t)/100;let h=`<div class="card" style="text-align:center"><h3>🗺️ نقشه راه گام ${p.name?'— '+p.name:''}</h3>
+<div class="grid"><div class="stat c4">گام فعلی<b>${FA(cs)} از ۱۰۰</b></div><div class="stat c1">هر گام<b>${R2(d)} کیلو</b></div></div>
+<p>${cs<100?`گام بعدی در وزن <b>${R2(stepW(cs+1))}</b> کیلو`:'🎉 به صدگام رسیدید!'}</p></div>`;
+h+=`<div class="card rm"><div class="r"><div class="cell" style="background:#14c8c8;padding:10px;font-size:15px">🏆 صدگام — ${R2(t)} کیلوگرم ${cs>=100?'✅':''}</div></div>`;
+for(let L=9;L>=0;L--){const rev=L%2==1,steps=[...Array(10)].map((_,i)=>L*10+i+1);
+h+=`<div class="lv" style="color:${L==4?'#b8a000':LV[L]}">${L>0&&false?'':''}LEVEL ${L} — ${L>0?'ایستگاه '+ST[L-1]+' '+'('+R2(stepW(L*10))+' کیلو)':'شروع'}</div><div class="r ${rev?'rev':''}">`;
+steps.forEach(n=>{h+=`<div class="cell ${n>cs?'off':''} ${n==cs?'now':''}" style="background:${LV[L]};${L==4?'color:#4a3d00':''}">${FA(n)}<small>${R1(stepW(n))}</small></div>`});h+='</div>'}
+return h+`<div class="r" style="margin-top:6px"><div class="cell" style="background:#111;padding:10px;font-size:15px">🚩 شروع — ${R2(p.w0)} کیلوگرم</div></div></div>`}
+/* ===== صفحات ===== */
+let tab='home',cm='d',selDate=todayISO();
+function tabs(){const t=[['home','🏠','خانه','#d946a8'],['weight','⚖️','وزن','#8b5cf6'],['chart','📈','نمودار','#10b981'],['road','🗺️','گام‌ها','#f59e0b'],['food','🍽️','غذا','#fb7185'],['act','🏃‍♀️','تحرک','#ec4899'],['cmp','📊','مقایسه','#06b6d4'],['prof','👤','پروفایل','#a855f7']];
+if(U().role=='admin')t.push(['admin','🛡️','مدیریت','#4a2040']);return t}
+function setAv(){const a=S_().avatar;$('#hav').innerHTML=a.t=='i'?`<img src="${a.v}">`:a.v}
+function render(){
+if(!me||!DB.users[me]){me=null;return authView()}
+if(U().banned){alert('⛔ حساب شما مسدود شده است.');return logout()}
+if(!P())return onboard();
+setAv();$('#today').textContent=`${U().data.profile.name||me} · ${jf(todayISO())}`;
+$('#nav').innerHTML=tabs().map(t=>`<a class="${tab==t[0]?'on':''}" style="--c:${t[3]}" onclick="tab='${t[0]}';render()"><span>${t[1]}</span>${t[2]}</a>`).join('');
+$('#app').innerHTML=({home,weight,chart:chartTab,road:roadmap,food,act,cmp,prof,admin})[tab]();window.scrollTo(0,0)}
+function targetPreview(){const h=+$('#ht').value;if(!h)return;$('#tp').innerHTML=`BMI ۲۲٫۵ → <b>${R1(bmiW(h,22.5))}</b> کیلو &nbsp;|&nbsp; BMI ۲۴٫۵ → <b>${R1(bmiW(h,24.5))}</b> کیلو`}
+function onboard(){$('#nav').innerHTML='';$('#today').textContent='تکمیل مشخصات';
+$('#app').innerHTML=`<div class="card"><h3>🎯 شروع مسیر</h3>
+نام<input id="nm"><div class="row"><div>جنسیت<select id="sx"><option value="f">زن</option><option value="m">مرد</option></select></div><div>سن<input id="ag" type="number" value="30"></div></div>
+<div class="row"><div>قد (سانتی‌متر)<input id="ht" type="number" value="165" oninput="targetPreview()"></div><div>وزن اولیه (کیلو)<input id="w0" type="number" step="0.1" value="80"></div></div>
+تاریخ شروع${datePicker('sd',todayISO())}
+سطح فعالیت<select id="af">${Object.entries(AF).map(([k,v])=>`<option value=${k}>${v}</option>`).join('')}</select>
+هدف وزن<select id="bt"><option value="22.5">BMI ۲۲٫۵ (ایده‌آل)</option><option value="24.5">BMI ۲۴٫۵ (نرمال بالا)</option></select>
+<div class="msg" id="tp"></div>
+یا وزن هدف دلخواه (اختیاری)<input id="tg" type="number" step="0.1">
+<button onclick="start()">شروع 🚀</button></div>`;targetPreview()}
+function start(){const w0=+$('#w0').value,h=+$('#ht').value,a=+$('#ag').value;if(!w0||!h||!a)return alert('مقادیر را کامل وارد کنید');
+const sd=getDate('sd');S_().profile={name:$('#nm').value,sex:$('#sx').value,age:a,h,w0,start:sd,af:+$('#af').value,bmiT:+$('#bt').value,target:+$('#tg').value||0};S_().w[sd]=w0;saveDB();render()}
+function home(){const p=P(),w=curW(),t=targetW(),lost=p.w0-w,total=p.w0-t,rem=w-t;const pr=total>0?Math.max(0,Math.min(100,lost/total*100)):100;
+const day=dn(todayISO())-dn(p.start)+1,b=bmi(w);const bc=b<18.5?['لاغر','#60a5fa']:b<25?['نرمال','#10b981']:b<30?['اضافه‌وزن','#f59e0b']:['چاقی','#e11d48'];
+return `<div class="card"><h3>سلام ${p.name||''} 💕</h3><small>شروع: ${jf(p.start)} — روز ${FA(day)}</small>
+<div class="grid" style="margin-top:10px"><div class="stat c1">تا الان کم کرده‌اید<b>${R1(Math.max(lost,0))} کیلو</b>${lost<0?'<small>(افزایش '+R1(-lost)+')</small>':''}</div>
+<div class="stat c3">تا هدف مانده<b>${R1(Math.max(rem,0))} کیلو</b></div>
+<div class="stat c2">وزن فعلی<b>${R1(w)}</b></div><div class="stat c4">وزن هدف<b>${R1(t)}</b></div></div>
+<p>پیشرفت: ${FA(Math.round(pr))}٪ — گام ${FA(curStep())} از ۱۰۰</p><div class="bar"><i style="width:${pr}%"></i></div></div>
+<div class="card"><h3>BMI: ${R1(b)} <span class="tag" style="background:${bc[1]}">${bc[0]}</span></h3>
+<small>هدف بر اساس BMI ${R1(p.bmiT||22.5)} و قد ${FA(p.h)}${p.target?' (دستی)':''}</small></div>
+<div class="card"><h3>🔍 تفسیر روند</h3>${interpret().map(m=>`<div class="msg" style="--c:${m[0]}">${m[1]}</div>`).join('')}</div>
+<div class="card"><h3>🔥 کالری امروز</h3><div class="grid"><div class="stat c3">مصرف<b>${FA(Math.round(mealCal(todayISO())))}</b></div><div class="stat c5">سقف پیشنهادی<b>${FA(goalCal())}</b></div></div></div>`}
+function weight(){const d=dates().reverse().slice(0,30),W=S_().w;
+return `<div class="card"><h3>⚖️ ثبت وزن</h3>${datePicker('wd',todayISO())}<input id="wv" type="number" step="0.1" placeholder="وزن (کیلو)"><button class="s" onclick="addW()">ثبت وزن</button></div>
+<div class="card"><h3>تاریخچه</h3><table><tr><th>تاریخ</th><th>وزن</th><th>تغییر</th><th></th></tr>${d.map((k,i)=>{const pv=d[i+1],df=pv?W[k]-W[pv]:0;return `<tr><td>${jf(k)}</td><td>${R1(W[k])}</td><td class="${df>0?'up':'dn'}">${pv?(df>0?'+':'')+R1(df):'-'}</td><td><button class="d" onclick="delW('${k}')">✕</button></td></tr>`}).join('')}</table></div>`}
+function addW(){const v=+$('#wv').value;if(!v)return;S_().w[getDate('wd')]=v;saveDB();render()}
+function delW(k){if(k==P().start&&dates().length==1)return alert('وزن شروع را نمی‌توان حذف کرد');delete S_().w[k];saveDB();render()}
+function chartTab(){const d=dates(),W=S_().w;let pts=[],title;
+if(cm=='d'){title='۳۰ روز اخیر';pts=d.slice(-30).map(k=>[jshort(k),W[k]])}
+else if(cm=='w'){title='میانگین هفتگی (از شروع)';const s=dn(P().start),g={};d.forEach(k=>{const i=Math.floor((dn(k)-s)/7);(g[i]=g[i]||[]).push(W[k])});pts=Object.keys(g).map(i=>['هفته '+FA(+i+1),g[i].reduce((a,b)=>a+b)/g[i].length])}
+else{title='میانگین ماهانه';const g={};d.forEach(k=>{const[y,m]=J(k);const key=y*100+m;(g[key]=g[key]||[]).push(W[k])});pts=Object.keys(g).sort().map(key=>[MONTHS[key%100-1],g[key].reduce((a,b)=>a+b)/g[key].length])}
+return `<div class="card"><div class="seg">${[['d','روزانه'],['w','هفتگی'],['m','ماهانه']].map(x=>`<button class="${cm==x[0]?'on':''}" onclick="cm='${x[0]}';render()">${x[1]}</button>`).join('')}</div>
+<h3 style="margin-top:12px">${title}</h3>${chart(pts,cm=='d'?'#d946a8':cm=='w'?'#10b981':'#f59e0b')}
+${pts.length<2?'<div class="msg">برای دیدن خط روند، وزن چند روز را ثبت کنید ✨</div>':''}</div>
+<div class="card"><h3>🔍 تفسیر</h3>${interpret().map(m=>`<div class="msg" style="--c:${m[0]}">${m[1]}</div>`).join('')}</div>`}
+function food(){const m=S_().meals[selDate]||{};
+return `<div class="card"><h3>🍽️ وعده‌های غذایی</h3>${datePicker('fd',selDate)}<button class="g" onclick="selDate=getDate('fd');render()">نمایش این روز</button>
+<div class="stat c3">${jf(selDate)} — مجموع<b>${FA(Math.round(mealCal(selDate)))} کالری</b><small>سقف پیشنهادی ${FA(goalCal())}</small></div></div>`+
+MEALS.map((ml,i)=>{const it=m[i]||[],sub=it.reduce((a,f)=>a+f.k*f.n,0);return `<div class="card"><h3>${ml[0]} ${ml[1]} <span class="tag" style="background:#fb7185;float:left">${FA(Math.round(sub))} کالری</span></h3>
+<ul>${it.map((f,j)=>`<li class="row"><span style="font-size:26px;flex:none">${f.e||'🍽️'}</span><span>${f.name}<br><small>${FA(Math.round(f.k*f.n))} کالری</small></span>
+<span class="fix"><button class="sm g" onclick="chN(${i},${j},-.5)">−</button> <b>${FA(f.n)}</b> <button class="sm g" onclick="chN(${i},${j},.5)">+</button> <button class="d" onclick="delF(${i},${j})">✕</button></span></li>`).join('')}</ul>
+<button onclick="picker(${i})">➕ افزودن غذا</button></div>`}).join('')}
+function picker(i,q=''){const l=FOODS.map((f,x)=>[f,x]).filter(([f])=>f[0].includes(q));
+$('#mod').innerHTML=`<div class="modal" onclick="if(event.target==this)this.remove()"><div><h3>${MEALS[i][0]} ${MEALS[i][1]}</h3>
+<input placeholder="🔍 جستجو..." value="${q}" oninput="picker(${i},this.value);document.querySelector('.modal input').focus()">
+<div class="foods">${l.map(([f,x])=>`<div class="fd" onclick="addF(${i},${x})"><span class="e">${f[2]}</span><b>${f[0]}</b><br>${f[3]}<br><small>${FA(f[1])} کالری</small></div>`).join('')}
+<div class="fd" onclick="custom(${i})"><span class="e">✏️</span><b>غذای دلخواه</b></div></div>
+<button class="g" onclick="$('#mod').innerHTML=''">بستن</button></div></div>`;}
+function addF(i,x){const f=FOODS[x],m=S_().meals[selDate]=S_().meals[selDate]||{};m[i]=m[i]||[];const e=m[i].find(a=>a.name==f[0]);
+if(e)e.n+=1;else m[i].push({name:f[0],k:f[1],e:f[2],n:1});saveDB();$('#mod').innerHTML='';render()}
+function custom(i){const n=prompt('نام غذا');const k=+prompt('کالری هر واحد');if(!k)return;const m=S_().meals[selDate]=S_().meals[selDate]||{};(m[i]=m[i]||[]).push({name:n||'غذا',k,e:'🍽️',n:1});saveDB();$('#mod').innerHTML='';render()}
+function chN(i,j,d){const f=S_().meals[selDate][i][j];f.n=Math.max(.5,f.n+d);saveDB();render()}
+function delF(i,j){S_().meals[selDate][i].splice(j,1);saveDB();render()}
+function act(){const a=S_().act[selDate]||{};
+return `<div class="card"><h3>🏃‍♀️ تحرک، خواب و آب</h3>${datePicker('ad',selDate)}<button class="g" onclick="selDate=getDate('ad');render()">نمایش این روز</button><b>${jf(selDate)}</b>
+<label>👣 تعداد قدم</label><input id="st" type="number" value="${a.steps||''}"><label>🏋️ دقیقه ورزش</label><input id="mn" type="number" value="${a.min||''}">
+<label>😴 ساعت خواب</label><input id="sl" type="number" step="0.5" value="${a.sleep||''}"><label>💧 لیوان آب</label><input id="wa" type="number" value="${a.water||''}">
+<button class="s" onclick="saveA()">ذخیره</button>
+<div class="grid" style="margin-top:8px"><div class="stat c6">کالری سوخته (تخمین)<b>${FA(burn(selDate))}</b></div><div class="stat c5">آب<b>${FA(a.water||0)} / ۸</b></div></div></div>`}
+function saveA(){S_().act[selDate]={steps:+$('#st').value,min:+$('#mn').value,sleep:+$('#sl').value,water:+$('#wa').value};saveDB();render()}
+function cmp(){const t=todayISO(),n=dn(t),days=[...Array(7)].map((_,i)=>fromDn(n-i)),A=S_().act;
+const avg=f=>{const v=days.slice(1).map(f).filter(x=>x>0);return v.length?v.reduce((a,b)=>a+b)/v.length:0};
+const rows=[['🔥 کالری مصرفی',d=>mealCal(d),'#f59e0b'],['🏃‍♀️ کالری سوخته',burn,'#10b981'],['👣 قدم',d=>(A[d]||{}).steps||0,'#60a5fa'],['😴 خواب',d=>(A[d]||{}).sleep||0,'#a855f7'],['💧 آب',d=>(A[d]||{}).water||0,'#22d3ee']];
+const net=mealCal(t)-tdee()-burn(t);
+return `<div class="card"><h3>📊 امروز در مقایسه با روزهای قبل</h3><table><tr><th></th><th>امروز</th><th>دیروز</th><th>میانگین ۶ روز قبل</th></tr>
+${rows.map(r=>{const a=r[1](days[0]),b=r[1](days[1]),c=avg(r[1]);return `<tr><td>${r[0]}</td><td><b>${R1(a)}</b> ${c?(a>c?'▲':a<c?'▼':'='):''}</td><td>${R1(b)}</td><td>${R1(c)}</td></tr>`}).join('')}</table></div>`+
+rows.map(r=>`<div class="card"><h3>${r[0]} — ۷ روز اخیر</h3>${bars(days.map((d,i)=>[i?jshort(d):'امروز',r[1](d),i?r[2]+'88':r[2]]).reverse(),r[2])}</div>`).join('')+
+`<div class="card"><h3>تراز کالری امروز</h3><div class="msg" style="--c:${net<0?'#10b981':'#e11d48'}">مصرف − (متابولیسم + ورزش) = <b>${FA(Math.round(net))}</b> ${net<0?'(کسری؛ مناسب کاهش وزن ✅)':'(مازاد)'}</div></div>`}
+/* ===== پروفایل ===== */
+const AVS=['👩','👩‍🦰','👩‍🦱','👱‍♀️','👩‍🦳','🧕','👸','🦸‍♀️','🧚‍♀️','💃','🌸','🌷','🦋','🐱','🐰','🦄','🍓','⭐'];
+function prof(){const p=P(),pl=BILLING.plans.find(x=>x.id==U().plan)||BILLING.plans[0];
+return `<div class="card" style="text-align:center"><div class="av" style="width:90px;height:90px;font-size:52px;margin:auto">${S_().avatar.t=='i'?`<img src="${S_().avatar.v}">`:S_().avatar.v}</div>
+<h3>${p.name||me}</h3><span class="pill">@${me}</span> <span class="pill">پلن: ${pl.name}</span></div>
+<div class="card"><h3>🎭 آواتار</h3><div class="avs">${AVS.map(a=>`<span onclick="setAvatar('e','${a}')">${a}</span>`).join('')}</div></div>
+<div class="card"><h3>📷 عکس‌های من</h3><input type="file" id="fi" accept="image/*" multiple onchange="upl(this.files)">
+<div class="ph">${S_().photos.map((x,i)=>`<div><img src="${x}" onclick="setAvatar('i',S_().photos[${i}])"><div class="row"><button class="sm g" onclick="setAvatar('i',S_().photos[${i}])">پروفایل</button><button class="d" onclick="delP(${i})">✕</button></div></div>`).join('')}</div>
+<small>روی عکس بزنید تا عکس پروفایل شود.</small></div>
+<div class="card"><h3>⚙️ تنظیمات</h3>
+<div>هدف وزن</div><select id="bt"><option value="22.5" ${p.bmiT==22.5?'selected':''}>BMI ۲۲٫۵ → ${R1(bmiW(p.h,22.5))} کیلو</option><option value="24.5" ${p.bmiT==24.5?'selected':''}>BMI ۲۴٫۵ → ${R1(bmiW(p.h,24.5))} کیلو</option></select>
+وزن هدف دستی (خالی = طبق BMI)<input id="tg" type="number" step="0.1" value="${p.target||''}">
+سن<input id="ag" type="number" value="${p.age}">قد<input id="ht" type="number" value="${p.h}">
+فعالیت<select id="af">${Object.entries(AF).map(([k,v])=>`<option value=${k} ${k==p.af?'selected':''}>${v}</option>`).join('')}</select>
+<button class="s" onclick="saveSet()">ذخیره</button></div>
+<div class="card"><h3>💎 اشتراک</h3><div class="msg">فعلاً همه امکانات <b>رایگان</b> است. در آینده پلن‌های ویژه اضافه می‌شود: ${BILLING.plans[1].features.join('، ')}.</div></div>
+<div class="card"><button onclick="exp()">⬇️ دانلود پشتیبان</button><button class="g" onclick="logout()">🚪 خروج</button>
+<button style="background:#e11d48" onclick="if(confirm('همه داده‌های شما پاک شود؟')){U().data=emptyData();saveDB();render()}">🗑️ پاک کردن داده‌ها</button></div>
+<p style="text-align:center;color:#9d6b8c;font-size:12px">این برنامه جایگزین مشاوره پزشک نیست.</p>`}
+function saveSet(){const p=P();p.bmiT=+$('#bt').value;p.target=+$('#tg').value||0;p.age=+$('#ag').value;p.h=+$('#ht').value;p.af=+$('#af').value;saveDB();tab='home';render()}
+function setAvatar(t,v){S_().avatar={t,v};saveDB();render()}
+function delP(i){const a=S_().avatar,x=S_().photos[i];S_().photos.splice(i,1);if(a.t=='i'&&a.v==x)S_().avatar={t:'e',v:'🌸'};saveDB();render()}
+function upl(files){[...files].slice(0,10).forEach(f=>{const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const m=480,k=Math.min(1,m/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=im.width*k;c.height=im.height*k;c.getContext('2d').drawImage(im,0,0,c.width,c.height);
+try{S_().photos.push(c.toDataURL('image/jpeg',.78));saveDB();render()}catch(e){alert('حافظه دستگاه پر است')}};im.src=r.result};r.readAsDataURL(f)})}
+function exp(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(S_())],{type:'application/json'}));a.download='andam-no-backup.json';a.click()}
+/* ===== مدیریت ===== */
+function admin(){if(U().role!='admin')return'';const us=Object.entries(DB.users);
+return `<div class="card"><h3>🛡️ مدیریت کاربران (${FA(us.length)})</h3><table><tr><th>کاربر</th><th>پلن</th><th>وضعیت</th><th></th></tr>
+${us.map(([u,x])=>`<tr><td>${u}${x.role=='admin'?' 👑':''}<br><small>${x.created?jf(x.created):''}</small></td>
+<td><select style="padding:4px;margin:0" onchange="DB.users['${u}'].plan=this.value;saveDB()">${BILLING.plans.map(p=>`<option value=${p.id} ${x.plan==p.id?'selected':''}>${p.name}</option>`).join('')}</select></td>
+<td>${x.banned?'<span class="tag" style="background:#e11d48">مسدود</span>':'<span class="tag" style="background:#10b981">فعال</span>'}</td>
+<td>${x.role=='admin'?'':`<button class="sm ${x.banned?'s':'d'}" onclick="ban('${u}')">${x.banned?'آزاد':'Ban'}</button> <button class="sm d" onclick="delU('${u}')">حذف</button>`}</td></tr>`).join('')}</table>
+<div class="msg" style="--c:#f59e0b">توجه: در این نسخه داده‌ها روی همین دستگاه ذخیره می‌شود. برای مسدودسازی واقعی کاربران روی دستگاه‌های مختلف باید به سرور (مثل Supabase/Firebase) متصل شود.</div></div>`}
+function ban(u){DB.users[u].banned=!DB.users[u].banned;saveDB();render()}
+function delU(u){if(confirm('حذف '+u+'؟')){delete DB.users[u];saveDB();render()}}
+if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js');
+render();
+</script></body></html>
