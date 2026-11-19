@@ -1,6 +1,6 @@
 // مقادیر را از Firebase Console → Project settings → Your apps (Web) کپی کنید
 export const firebaseConfig = {
-    apiKey: "AIzaSyBxGslWb4b5anYGy3yrMDFb8w02RdY2gYM",
+  apiKey: "AIzaSyBxGslWb4b5anYGy3yrMDFb8w02RdY2gYM",
   authDomain: "andame-noo.firebaseapp.com",
   projectId: "andame-noo",
   storageBucket: "andame-noo.firebasestorage.app",
