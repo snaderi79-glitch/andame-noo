@@ -59,7 +59,27 @@ table{width:100%;border-collapse:collapse;font-size:14px}td,th{padding:6px;borde
 <div id="wm"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-width="2.5"/><circle cx="50" cy="26" r="7"/><path d="M50 35C37 38 41 52 45 58C39 70 39 78 37 86L63 86C61 78 61 70 55 58C59 52 63 38 50 35Z"/><path d="M68 40c10-2 14 6 8 12-6-2-9-6-8-12Z" opacity=".7"/></svg><b>اندام نو</b></div>
 <header><div class="av" id="hav">🌸</div><div><h1>اندام نو</h1><small id="today"></small></div></header>
 <main id="app"></main><nav id="nav"></nav><div id="mod"></div>
+<script type="module">
+import {firebaseConfig} from './firebase-config.js';
+import {initializeApp} from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import {getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword,signOut,onAuthStateChanged} from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+import {getFirestore,doc,getDoc,setDoc,updateDoc,deleteDoc,getDocs,collection} from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);
+const em=u=>u+'@andamno.app';
+window.FBres({
+ onAuth:cb=>onAuthStateChanged(auth,cb),
+ register:async(u,p,d)=>{const c=await createUserWithEmailAndPassword(auth,em(u),p);await setDoc(doc(db,'users',c.user.uid),d);return c.user.uid},
+ login:(u,p)=>signInWithEmailAndPassword(auth,em(u),p),
+ logout:()=>signOut(auth),
+ get:async uid=>{const x=await getDoc(doc(db,'users',uid));return x.exists()?x.data():null},
+ isAdmin:async uid=>{try{return (await getDoc(doc(db,'admins',uid))).exists()}catch(e){return false}},
+ save:(uid,d)=>updateDoc(doc(db,'users',uid),d),
+ list:async()=>(await getDocs(collection(db,'users'))).docs.map(x=>[x.id,x.data()]),
+ del:uid=>deleteDoc(doc(db,'users',uid))
+});
+</script>
 <script>
+let FBres;const FBready=new Promise(r=>window.FBres=r);
 const $=s=>document.querySelector(s);
 const FA=n=>String(n).replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d]);
 const R1=n=>FA((Math.round(n*10)/10).toString().replace('.','٫'));
@@ -93,31 +113,25 @@ const BILLING={enabled:false,currency:'تومان',plans:[
  {id:'free',name:'رایگان',price:0,features:['ثبت وزن و غذا','نمودار','نقشه راه گام']},
  {id:'pro',name:'ویژه (به‌زودی)',price:0,features:['گزارش PDF','مشاوره و رژیم اختصاصی','پشتیبان‌گیری ابری','نمودار پیشرفته']}]};
 const canUse=(feat)=>!BILLING.enabled||U().plan!=='free'; // در آینده برای قفل کردن امکانات استفاده می‌شود
-/* ===== ذخیره‌سازی و کاربران ===== */
-let DB=JSON.parse(localStorage.getItem('an_db')||'{"users":{}}');
-const saveDB=()=>localStorage.setItem('an_db',JSON.stringify(DB));
-let me=localStorage.getItem('an_me')||null;
+/* ===== ذخیره‌سازی و کاربران (Firebase) ===== */
+let FB,DB={users:{}},me=null,ADM=[],ready=false,saveT;
 const U=()=>DB.users[me];const S_=()=>U().data;
-async function hash(p,salt){const s=salt+':'+p;try{const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}catch(e){let h=5381;for(const c of s)h=(h*33^c.charCodeAt(0))>>>0;return'f'+h}}
+function saveDB(){clearTimeout(saveT);saveT=setTimeout(()=>{const u=U();if(!u)return;FB.save(me,{data:u.data}).catch(e=>console.warn(e))},600)}
 const emptyData=()=>({profile:null,w:{},meals:{},act:{},avatar:{t:'e',v:'🌸'},photos:[]});
+const errFa=e=>({'auth/email-already-in-use':'این نام کاربری قبلاً گرفته شده','auth/invalid-credential':'نام کاربری یا رمز اشتباه است','auth/weak-password':'رمز خیلی ضعیف است','auth/network-request-failed':'اتصال اینترنت مشکل دارد','auth/too-many-requests':'تلاش بیش از حد؛ کمی بعد دوباره امتحان کنید'}[e.code]||('خطا: '+(e.code||e.message)));
+async function loadUser(uid){let d=await FB.get(uid);if(!d)return null;d.role=(await FB.isAdmin(uid))?'admin':'user';DB.users[uid]=d;me=uid;return d}
 async function doRegister(){const u=$('#un').value.trim().toLowerCase(),p=$('#pw').value;
 if(!/^[a-z0-9_]{3,20}$/.test(u))return alert('نام کاربری: ۳ تا ۲۰ حرف انگلیسی، عدد یا _');
 if(p.length<6)return alert('رمز عبور حداقل ۶ کاراکتر');if($('#pw2').value!==p)return alert('تکرار رمز یکسان نیست');
-if(DB.users[u])return alert('این نام کاربری قبلاً گرفته شده');
-const salt=Math.random().toString(36).slice(2);const first=!Object.keys(DB.users).length;
-DB.users[u]={salt,hash:await hash(p,salt),role:first?'admin':'user',banned:false,plan:'free',created:todayISO(),data:emptyData()};
-saveDB();me=u;localStorage.setItem('an_me',u);render()}
-async function doLogin(){const u=$('#un').value.trim().toLowerCase(),p=$('#pw').value;const x=DB.users[u];
-if(!x||x.hash!==await hash(p,x.salt))return alert('نام کاربری یا رمز اشتباه است');
-if(x.banned)return alert('⛔ حساب شما مسدود شده است.');
-me=u;localStorage.setItem('an_me',u);tab='home';render()}
-const logout=()=>{me=null;localStorage.removeItem('an_me');render()}
+try{window.regBusy=true;await FB.register(u,p,{username:u,banned:false,plan:'free',created:todayISO(),data:emptyData()});window.regBusy=false;await loadUser((await FBuid()));render()}catch(e){window.regBusy=false;alert(errFa(e))}}
+let curUid=null;const FBuid=async()=>curUid;
+async function doLogin(){const u=$('#un').value.trim().toLowerCase(),p=$('#pw').value;
+try{await FB.login(u,p)}catch(e){return alert(errFa(e))}}
+const logout=async()=>{await FB.logout();me=null;DB.users={};render()}
 let authMode='login';
 function authView(){$('#nav').innerHTML='';$('#hav').innerHTML='🌸';$('#today').textContent='خوش آمدید';
-const first=!Object.keys(DB.users).length;
 $('#app').innerHTML=`<div class="card auth"><div class="seg"><button class="${authMode=='login'?'on':''}" onclick="authMode='login';render()">ورود</button><button class="${authMode=='reg'?'on':''}" onclick="authMode='reg';render()">ثبت‌نام</button></div>
 <h3 style="margin-top:12px">${authMode=='login'?'🔐 ورود به اندام نو':'🌷 ساخت حساب'}</h3>
-${first&&authMode=='reg'?'<div class="msg">اولین حساب ساخته‌شده، مدیر برنامه می‌شود.</div>':''}
 <input id="un" placeholder="نام کاربری (انگلیسی)" autocapitalize="none" autocomplete="username" dir="ltr">
 <input id="pw" type="password" placeholder="رمز عبور" autocomplete="current-password" dir="ltr">
 ${authMode=='reg'?'<input id="pw2" type="password" placeholder="تکرار رمز" dir="ltr">':''}
@@ -184,8 +198,9 @@ function tabs(){const t=[['home','🏠','خانه','#d946a8'],['weight','⚖️'
 if(U().role=='admin')t.push(['admin','🛡️','مدیریت','#4a2040']);return t}
 function setAv(){const a=S_().avatar;$('#hav').innerHTML=a.t=='i'?`<img src="${a.v}">`:a.v}
 function render(){
-if(!me||!DB.users[me]){me=null;return authView()}
-if(U().banned){alert('⛔ حساب شما مسدود شده است.');return logout()}
+if(!ready){$('#app').innerHTML='<div class="card" style="text-align:center">⏳ در حال بارگذاری...</div>';return}
+if(!me||!DB.users[me])return authView()
+if(U().banned){$('#nav').innerHTML='';$('#app').innerHTML='<div class="card" style="text-align:center"><h3>⛔ حساب شما مسدود شده است</h3><button onclick="logout()">خروج</button></div>';return}
 if(!P())return onboard();
 setAv();$('#today').textContent=`${U().data.profile.name||me} · ${jf(todayISO())}`;
 $('#nav').innerHTML=tabs().map(t=>`<a class="${tab==t[0]?'on':''}" style="--c:${t[3]}" onclick="tab='${t[0]}';render()"><span>${t[1]}</span>${t[2]}</a>`).join('');
@@ -282,19 +297,22 @@ return `<div class="card" style="text-align:center"><div class="av" style="width
 function saveSet(){const p=P();p.bmiT=+$('#bt').value;p.target=+$('#tg').value||0;p.age=+$('#ag').value;p.h=+$('#ht').value;p.af=+$('#af').value;saveDB();tab='home';render()}
 function setAvatar(t,v){S_().avatar={t,v};saveDB();render()}
 function delP(i){const a=S_().avatar,x=S_().photos[i];S_().photos.splice(i,1);if(a.t=='i'&&a.v==x)S_().avatar={t:'e',v:'🌸'};saveDB();render()}
-function upl(files){[...files].slice(0,10).forEach(f=>{const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const m=480,k=Math.min(1,m/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=im.width*k;c.height=im.height*k;c.getContext('2d').drawImage(im,0,0,c.width,c.height);
+function upl(files){[...files].slice(0,6).forEach(f=>{const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const m=360,k=Math.min(1,m/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=im.width*k;c.height=im.height*k;c.getContext('2d').drawImage(im,0,0,c.width,c.height);
 try{S_().photos.push(c.toDataURL('image/jpeg',.78));saveDB();render()}catch(e){alert('حافظه دستگاه پر است')}};im.src=r.result};r.readAsDataURL(f)})}
 function exp(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(S_())],{type:'application/json'}));a.download='andam-no-backup.json';a.click()}
 /* ===== مدیریت ===== */
-function admin(){if(U().role!='admin')return'';const us=Object.entries(DB.users);
-return `<div class="card"><h3>🛡️ مدیریت کاربران (${FA(us.length)})</h3><table><tr><th>کاربر</th><th>پلن</th><th>وضعیت</th><th></th></tr>
-${us.map(([u,x])=>`<tr><td>${u}${x.role=='admin'?' 👑':''}<br><small>${x.created?jf(x.created):''}</small></td>
-<td><select style="padding:4px;margin:0" onchange="DB.users['${u}'].plan=this.value;saveDB()">${BILLING.plans.map(p=>`<option value=${p.id} ${x.plan==p.id?'selected':''}>${p.name}</option>`).join('')}</select></td>
+function admin(){if(U().role!='admin')return'';
+if(!window.admLoaded){window.admLoaded=1;FB.list().then(l=>{ADM=l;render()});}
+const us=ADM;
+return `<div class="card"><h3>🛡️ مدیریت کاربران (${FA(us.length)})</h3><button class="g" onclick="window.admLoaded=0;render()">🔄 بازخوانی</button><table><tr><th>کاربر</th><th>پلن</th><th>وضعیت</th><th></th></tr>
+${us.map(([id,x])=>{const self=id==me;return `<tr><td>${x.username}${self?' 👑':''}<br><small>${x.created?jf(x.created):''}</small></td>
+<td><select style="padding:4px;margin:0" onchange="FB.save('${id}',{plan:this.value})">${BILLING.plans.map(p=>`<option value=${p.id} ${x.plan==p.id?'selected':''}>${p.name}</option>`).join('')}</select></td>
 <td>${x.banned?'<span class="tag" style="background:#e11d48">مسدود</span>':'<span class="tag" style="background:#10b981">فعال</span>'}</td>
-<td>${x.role=='admin'?'':`<button class="sm ${x.banned?'s':'d'}" onclick="ban('${u}')">${x.banned?'آزاد':'Ban'}</button> <button class="sm d" onclick="delU('${u}')">حذف</button>`}</td></tr>`).join('')}</table>
-<div class="msg" style="--c:#f59e0b">توجه: در این نسخه داده‌ها روی همین دستگاه ذخیره می‌شود. برای مسدودسازی واقعی کاربران روی دستگاه‌های مختلف باید به سرور (مثل Supabase/Firebase) متصل شود.</div></div>`}
-function ban(u){DB.users[u].banned=!DB.users[u].banned;saveDB();render()}
-function delU(u){if(confirm('حذف '+u+'؟')){delete DB.users[u];saveDB();render()}}
+<td>${self?'':`<button class="sm ${x.banned?'s':'d'}" onclick="ban('${id}',${!x.banned})">${x.banned?'آزاد':'Ban'}</button> <button class="sm d" onclick="delU('${id}')">حذف</button>`}</td></tr>`}).join('')}</table></div>`}
+async function ban(id,v){await FB.save(id,{banned:v});window.admLoaded=0;render()}
+async function delU(id){if(confirm('حذف اطلاعات این کاربر؟')){await FB.del(id);window.admLoaded=0;render()}}
+(async()=>{render();FB=await FBready;FB.onAuth(async u=>{curUid=u&&u.uid;if(window.regBusy)return;
+ if(u){const d=await loadUser(u.uid).catch(()=>null);if(!d){await FB.logout();me=null}}else{me=null}
+ ready=true;render()})})();
 if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js');
-render();
 </script></body></html>
