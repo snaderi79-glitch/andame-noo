@@ -55,10 +55,17 @@ table{width:100%;border-collapse:collapse;font-size:14px}td,th{padding:6px;borde
 .lv{direction:rtl;font-size:11px;margin:8px 0 0;font-weight:bold}
 .auth{max-width:420px;margin:30px auto}.pill{display:inline-block;background:#fce7f3;color:var(--p);padding:2px 10px;border-radius:10px;font-size:12px}
 @media(min-width:700px){body{font-size:16px}}
+.hero{margin-bottom:12px}.slides{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;border-radius:24px;scrollbar-width:none}.slides::-webkit-scrollbar{display:none}
+.slide{flex:0 0 100%;scroll-snap-align:center;min-height:300px;padding:26px 22px;color:#fff;text-align:center;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:10px;box-sizing:border-box}
+.slide .big{font-size:64px}.slide h2{margin:0;font-size:21px}.slide p{margin:0;line-height:2;font-size:14px;opacity:.95}.slide small{opacity:.8}
+.cta{background:#fff!important;color:#be185d!important;font-weight:bold;font-size:16px;animation:pl 1.5s infinite}@keyframes pl{50%{transform:scale(1.06)}}
+.dots{display:flex;justify-content:center;gap:6px;margin-top:8px}.dots i{width:8px;height:8px;border-radius:9px;background:#d9b;opacity:.4;transition:.3s}.dots i.on{width:22px;opacity:1;background:var(--p)}
+.chips{display:flex;gap:6px;overflow-x:auto;padding:6px 0}.chip{flex:none;padding:5px 12px;border-radius:16px;background:#fde;font-size:13px;cursor:pointer}.chip.on{background:var(--p);color:#fff}
 </style></head><body>
 <div id="wm"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-width="2.5"/><circle cx="50" cy="26" r="7"/><path d="M50 35C37 38 41 52 45 58C39 70 39 78 37 86L63 86C61 78 61 70 55 58C59 52 63 38 50 35Z"/><path d="M68 40c10-2 14 6 8 12-6-2-9-6-8-12Z" opacity=".7"/></svg><b>اندام نو</b></div>
 <header><div class="av" id="hav">🌸</div><div><h1>اندام نو</h1><small id="today"></small></div></header>
 <main id="app"></main><nav id="nav"></nav><div id="mod"></div>
+<script src="foods.js"></script>
 <script type="module">
 import {firebaseConfig} from './firebase-config.js';
 import {initializeApp} from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
@@ -129,13 +136,24 @@ async function doLogin(){const u=$('#un').value.trim().toLowerCase(),p=$('#pw').
 try{await FB.login(u,p)}catch(e){return alert(errFa(e))}}
 const logout=async()=>{await FB.logout();me=null;DB.users={};render()}
 let authMode='login';
-function authView(){$('#nav').innerHTML='';$('#hav').innerHTML='🌸';$('#today').textContent='خوش آمدید';
-$('#app').innerHTML=`<div class="card auth"><div class="seg"><button class="${authMode=='login'?'on':''}" onclick="authMode='login';render()">ورود</button><button class="${authMode=='reg'?'on':''}" onclick="authMode='reg';render()">ثبت‌نام</button></div>
-<h3 style="margin-top:12px">${authMode=='login'?'🔐 ورود به اندام نو':'🌷 ساخت حساب'}</h3>
+const SL=[
+["🌿","با هر قدم، یک نسخه سبک‌تر از خودت","همین امروز شروع کن. هر کیلو کمتر یعنی نفس راحت‌تر، انرژی بیشتر و اعتمادبه‌نفس بالاتر. تو می‌توانی!","linear-gradient(135deg,#34d399,#059669)"],
+["⚠️","چاقی بی‌صدا آسیب می‌زند","دیابت نوع ۲ • فشار خون بالا • بیماری قلبی و سکته • کبد چرب • سنگ کیسه صفرا • آپنه خواب • درد مفاصل و زانو • افزایش خطر برخی سرطان‌ها • ناباروری و اختلال هورمونی • افسردگی","linear-gradient(135deg,#fb7185,#be123c)"],
+["💪","کاهش وزن، یعنی زندگی بهتر","با ۵ تا ۱۰٪ کاهش وزن، قند و فشار خونت بهتر می‌شود، خوابت عمیق‌تر و عمرت طولانی‌تر. لاغرها معمولاً پرانرژی‌ترند، کمتر بیمار می‌شوند و بیشتر لذت می‌برند.","linear-gradient(135deg,#60a5fa,#4338ca)"],
+["👗","لباس دلخواهت را بپوش","سایز کوچک‌تر یعنی انتخاب بیشتر: لباس‌های تنگ و شیک، مدل‌های متنوع، و راحتی در پرو. هدفت را بگذار و تصور کن در آینه چه می‌بینی.","linear-gradient(135deg,#f472b6,#a21caf)"],
+["🍽️","بیش از ۳۰۰ غذا، بدون محرومیت","فست‌فود، کباب، پروتئین‌ها، لبنیات، چربی‌ها، شیرینی، نوشیدنی و میوه؛ کالری همه را ببین و هوشمند انتخاب کن.","linear-gradient(135deg,#fbbf24,#ea580c)"],
+["📈","نمودار، نقشه راه ۱۰۰ گام، هدف BMI","وزنت را ثبت کن، مسیرت را روی نقشه ببین، آب و خواب و تحرک را کنترل کن و پیشرفتت را مقایسه کن.","linear-gradient(135deg,#a78bfa,#6d28d9)"]];
+const slideTo=i=>{const e=$('#sl');if(e)e.scrollTo({left:-(e.clientWidth*i),behavior:'smooth'})};
+function authView(){$('#nav').innerHTML='';$('#hav').innerHTML='🌸';$('#today').textContent='اندام نو';
+$('#app').innerHTML=`<div class="hero"><div id="sl" class="slides">${SL.map((s,i)=>`<div class="slide" style="background:${s[3]}"><div class="big">${s[0]}</div><h2>${s[1]}</h2><p>${s[2]}</p>${i==SL.length-1?`<button class="cta" onclick="authMode='reg';render();setTimeout(()=>$('#un').scrollIntoView({behavior:'smooth'}),50)">🚀 همین امروز شروع کن</button>`:'<small>← بکش و ادامه را ببین</small>'}</div>`).join('')}</div>
+<div class="dots">${SL.map((_,i)=>`<i onclick="slideTo(${i})"></i>`).join('')}</div></div>
+<div class="card auth"><div class="seg"><button class="${authMode=='login'?'on':''}" onclick="authMode='login';render()">ورود</button><button class="${authMode=='reg'?'on':''}" onclick="authMode='reg';render()">ثبت‌نام</button></div>
+<h3 style="margin-top:12px">${authMode=='login'?'🔐 ورود به اندام نو':'🌷 ساخت حساب رایگان'}</h3>
 <input id="un" placeholder="نام کاربری (انگلیسی)" autocapitalize="none" autocomplete="username" dir="ltr">
 <input id="pw" type="password" placeholder="رمز عبور" autocomplete="current-password" dir="ltr">
 ${authMode=='reg'?'<input id="pw2" type="password" placeholder="تکرار رمز" dir="ltr">':''}
-<button onclick="${authMode=='login'?'doLogin()':'doRegister()'}">${authMode=='login'?'ورود':'ثبت‌نام رایگان'}</button></div>`}
+<button onclick="${authMode=='login'?'doLogin()':'doRegister()'}">${authMode=='login'?'ورود':'ثبت‌نام رایگان'}</button></div>`;
+const e=$('#sl'),d=[...document.querySelectorAll('.dots i')];const u=()=>{const k=Math.round(Math.abs(e.scrollLeft)/e.clientWidth);d.forEach((x,i)=>x.className=i==k?'on':'')};e.onscroll=u;u()}
 /* ===== مدل داده ===== */
 const P=()=>S_().profile;
 const dates=()=>Object.keys(S_().w).sort();
@@ -177,6 +195,9 @@ return s+'</svg>'}
 function bars(items,color){const mx=Math.max(...items.map(i=>i[1]),1);return items.map(i=>`<div class="row" style="margin:4px 0"><span class="fix" style="width:56px;font-size:12px">${i[0]}</span><div class="bar"><i style="width:${i[1]/mx*100}%;background:${i[2]||color}"></i></div><span class="fix" style="width:50px;font-size:12px">${FA(Math.round(i[1]))}</span></div>`).join('')}
 /* ===== غذاها (ایموجی به‌عنوان تصویر؛ در آینده عکس واقعی) ===== */
 const FOODS=[["نان لواش",90,"🫓","۱ تکه"],["نان سنگک",150,"🥖","۱ کف دست"],["نان بربری",160,"🥖","۱ کف دست"],["نان تست",80,"🍞","۱ برش"],["برنج پخته",200,"🍚","۱ مشت بزرگ"],["ماکارونی",220,"🍝","۱ پیمانه"],["سیب‌زمینی",130,"🥔","۱ متوسط"],["تخم‌مرغ آب‌پز",75,"🥚","۱ عدد"],["نیمرو",110,"🍳","۱ عدد"],["پنیر",80,"🧀","۱ قوطی کبریت"],["کره",36,"🧈","۱ قاشق چای‌خوری"],["مربا/عسل",50,"🍯","۱ قاشق"],["شیر",120,"🥛","۱ لیوان"],["ماست کم‌چرب",100,"🥣","۱ کاسه"],["دوغ",40,"🥛","۱ لیوان"],["چای با قند",25,"🍵","۱ لیوان"],["قهوه ساده",5,"☕","۱ فنجان"],["مرغ پخته",165,"🍗","۱۰۰ گرم"],["جوجه‌کباب",250,"🍢","۱ سیخ"],["کوبیده",300,"🍖","۱ سیخ"],["گوشت قرمز پخته",250,"🥩","۱۰۰ گرم"],["ماهی",150,"🐟","۱۰۰ گرم"],["قورمه‌سبزی",190,"🥘","۱ ملاقه"],["قیمه",220,"🍲","۱ ملاقه"],["عدسی/سوپ",170,"🍜","۱ کاسه"],["آبگوشت",450,"🍲","۱ پرس"],["املت",300,"🍳","۱ پرس"],["حلیم",300,"🥣","۱ کاسه"],["چلو با خورش",600,"🍛","۱ پرس"],["پیتزا",285,"🍕","۱ برش"],["ساندویچ",450,"🥪","۱ عدد"],["سالاد",60,"🥗","۱ بشقاب"],["سیب",80,"🍎","۱ متوسط"],["موز",105,"🍌","۱ عدد"],["پرتقال",65,"🍊","۱ عدد"],["خیار",15,"🥒","۱ عدد"],["هندوانه",90,"🍉","۱ برش"],["گردو/بادام",170,"🥜","۱ مشت"],["پسته",160,"🌰","۱ مشت"],["شکلات",55,"🍫","۱ تکه"],["بیسکویت",50,"🍪","۱ عدد"],["نوشابه",140,"🥤","۱ قوطی"],["چیپس",150,"🍟","۱ بسته کوچک"],["خرما",23,"🌴","۱ عدد"],["کیک",300,"🍰","۱ برش"],["انگور",70,"🍇","۱ خوشه کوچک"],["توت‌فرنگی",50,"🍓","۱ کاسه"]];
+FOODS.forEach(f=>f[4]=f[4]||'ایرانی و عمومی');FOODS.push(...(window.FOODS2||[]));
+let fcat='همه';
+const FCATS=()=>['همه',...new Set(FOODS.map(f=>f[4]))];
 const MEALS=[["🌅","صبحانه"],["🍎","میان‌وعده صبح"],["🍛","ناهار"],["🥜","میان‌وعده عصر"],["🍲","شام"]];
 /* ===== نقشه راه گام ===== */
 const LV=['#111111','#ff2a2a','#e8201a','#ffb400','#ffe500','#38d200','#00a859','#00b0f0','#0b6fd1','#0a2a78'];
@@ -249,9 +270,10 @@ MEALS.map((ml,i)=>{const it=m[i]||[],sub=it.reduce((a,f)=>a+f.k*f.n,0);return `<
 <ul>${it.map((f,j)=>`<li class="row"><span style="font-size:26px;flex:none">${f.e||'🍽️'}</span><span>${f.name}<br><small>${FA(Math.round(f.k*f.n))} کالری</small></span>
 <span class="fix"><button class="sm g" onclick="chN(${i},${j},-.5)">−</button> <b>${FA(f.n)}</b> <button class="sm g" onclick="chN(${i},${j},.5)">+</button> <button class="d" onclick="delF(${i},${j})">✕</button></span></li>`).join('')}</ul>
 <button onclick="picker(${i})">➕ افزودن غذا</button></div>`}).join('')}
-function picker(i,q=''){const l=FOODS.map((f,x)=>[f,x]).filter(([f])=>f[0].includes(q));
+function picker(i,q=''){const l=FOODS.map((f,x)=>[f,x]).filter(([f])=>f[0].includes(q)&&(fcat=='همه'||f[4]==fcat));
 $('#mod').innerHTML=`<div class="modal" onclick="if(event.target==this)this.remove()"><div><h3>${MEALS[i][0]} ${MEALS[i][1]}</h3>
-<input placeholder="🔍 جستجو..." value="${q}" oninput="picker(${i},this.value);document.querySelector('.modal input').focus()">
+<input placeholder="🔍 جستجو در ${FA(FOODS.length)} غذا..." value="${q}" oninput="picker(${i},this.value);document.querySelector('.modal input').focus()">
+<div class="chips">${FCATS().map(c=>`<span class="chip ${c==fcat?'on':''}" onclick="fcat='${c}';picker(${i},'')">${c}</span>`).join('')}</div>
 <div class="foods">${l.map(([f,x])=>`<div class="fd" onclick="addF(${i},${x})"><span class="e">${f[2]}</span><b>${f[0]}</b><br>${f[3]}<br><small>${FA(f[1])} کالری</small></div>`).join('')}
 <div class="fd" onclick="custom(${i})"><span class="e">✏️</span><b>غذای دلخواه</b></div></div>
 <button class="g" onclick="$('#mod').innerHTML=''">بستن</button></div></div>`;}
